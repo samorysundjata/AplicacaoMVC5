@@ -6,6 +6,23 @@ namespace AplicacaoMVC5.Controllers
     {
         #region Public Methods
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [Route("sobre-nos")]
+        public ActionResult About()
+        {
+            return View();
+        }
+        
+        [Route("institucional/entre-contato")]
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
         public ContentResult ContentResult()
         {
             return Content("Olá");
@@ -23,10 +40,10 @@ namespace AplicacaoMVC5.Controllers
             return new HttpUnauthorizedResult();
         }
 
-        public ViewResult Index()
-        {
-            return View();
-        }
+        //public ViewResult Index()
+        //{
+        //    return View();
+        //}
 
         public JsonResult JsonResult()
         {
