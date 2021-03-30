@@ -1,5 +1,4 @@
 ﻿using AplicacaoMVC5.Models;
-using System;
 using System.Web.Mvc;
 
 namespace AplicacaoMVC5.Controllers
@@ -7,6 +6,16 @@ namespace AplicacaoMVC5.Controllers
     public class AlunoController : Controller
     {
         #region Public Methods
+
+        [Route("novo-aluno")]
+        public ActionResult NovoAluno(Aluno aluno)
+        {
+            if (!ModelState.IsValid) return View(aluno);
+
+            return View(aluno);
+        }
+
+        #endregion Public Methods
 
         //public ActionResult Index(Aluno aluno)
         //{
@@ -30,7 +39,5 @@ namespace AplicacaoMVC5.Controllers
 
         //    return RedirectToAction("Index", aluno);
         //}
-
-        #endregion Public Methods
     }
 }

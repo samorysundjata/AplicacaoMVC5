@@ -167,10 +167,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Aluno\NovoAluno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Aluno\" />
     <Folder Include="Views\Parametros\" />
     <Folder Include="Views\Teste\" />
   </ItemGroup>
