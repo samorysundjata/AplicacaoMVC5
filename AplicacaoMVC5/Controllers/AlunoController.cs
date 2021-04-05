@@ -7,6 +7,14 @@ namespace AplicacaoMVC5.Controllers
     {
         #region Public Methods
 
+        [HttpGet]
+        [Route("novo-aluno")]
+        public ActionResult NovoAluno()
+        {
+            return View();
+        }
+
+        [HttpPost]
         [Route("novo-aluno")]
         public ActionResult NovoAluno(Aluno aluno)
         {
