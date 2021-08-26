@@ -1,10 +1,20 @@
-﻿using AplicacaoMVC5.Models;
+﻿using AplicacaoMVC5.Data;
+using AplicacaoMVC5.Models;
+using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace AplicacaoMVC5.Controllers
 {
     public class AlunoController : Controller
     {
+        #region Private Fields
+
+        private readonly AppDbContext context = new AppDbContext();
+
+        #endregion Private Fields
+
         #region Public Methods
 
         [HttpGet]
@@ -21,32 +31,56 @@ namespace AplicacaoMVC5.Controllers
         {
             if (!ModelState.IsValid) return View(aluno);
 
+            aluno.DataMatricula = DateTime.Now;
+
+            context.Alunos.Add(aluno);
+            context.SaveChanges();
+
             return View(aluno);
         }
 
-        #endregion Public Methods
+        [HttpGet]
+        [Route("obter-alunos")]
+        public ActionResult ObterAlunos()
+        {
+            var alunos = context.Alunos.ToList();
 
-        //public ActionResult Index(Aluno aluno)
-        //{
-        //    if (!ModelState.IsValid) return View(aluno);
+            return View("Novo Aluno", alunos.FirstOrDefault());
+        }
 
-        //    return View(aluno);
-        //}
+        [HttpGet]
+        [Route("editar-aluno")]
+        public ActionResult EditarAluno()
+        {
+            var aluno = context.Alunos.FirstOrDefault(a => a.Nome == "Darth Maul");
 
-        //[Route("novo-aluno")]
-        //public ActionResult Novo(Aluno aluno)
-        //{
-        //    aluno = new Aluno
-        //    {
-        //        Id = 1,
-        //        Nome = "Joseh das Couves",
-        //        CPF = "0126468780-98",
-        //        DataMatricula = DateTime.Now,
-        //        Email = "jose@couves.com",
-        //        Ativo = true
-        //    };
+            aluno.Nome = "Lord Tyranus";
+            var entry = context.Entry(aluno);
+            context.Set<Aluno>().Attach(aluno);
+            entry.State = EntityState.Modified;
 
-        //    return RedirectToAction("Index", aluno);
-        //}
+            context.SaveChanges();
+
+            var alunonovo = context.Alunos.Find(aluno.Id);
+
+            return View("Novo Aluno", alunonovo);
+        }
+
+        [HttpGet]
+        [Route("excluir-aluno")]
+        public ActionResult ExcluirAluno()
+        {
+            var aluno = context.Alunos.FirstOrDefault(a => a.Nome == "Lord Tyranus");
+
+            context.Alunos.Remove(aluno);
+            context.SaveChanges();
+
+            var alunos = context.Alunos.ToList();
+
+            return View("Novo Aluno", alunos.FirstOrDefault());
+        }
+
+
+        #endregion Public Methods         
     }
 }
